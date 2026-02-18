@@ -415,3 +415,32 @@ if (subcategory) {
     });
   }
 };
+
+
+exports.getSingleForm = async (req, res) => {
+  try {
+    const { slug } = req.params;
+
+    console.log("Slug received:", slug); // 👈 ye add karo test ke liye
+
+    const form = await Form.findOne({ slug });
+
+    if (!form) {
+      return res.status(404).json({
+        success: false,
+        message: "Form not found"
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: form
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+};
